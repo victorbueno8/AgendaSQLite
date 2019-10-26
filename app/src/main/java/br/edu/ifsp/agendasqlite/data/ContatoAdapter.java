@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -85,13 +86,13 @@ public class ContatoAdapter
     public ContatoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                    .inflate(R.layout.contato_celula,parent,false);
-
         return new ContatoViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContatoViewHolder holder, int position) {
             holder.nome.setText(contactListFiltered.get(position).getNome());
+            holder.fav_star.setActivated(contactListFiltered.get(position).getFavorito());
     }
 
     @Override
@@ -138,10 +139,25 @@ public class ContatoAdapter
             implements View.OnClickListener
     {
         final TextView nome;
+        final ImageButton fav_star;
 
-        public ContatoViewHolder(@NonNull View itemView) {
+        public ContatoViewHolder(@NonNull final View itemView) {
             super(itemView);
             nome = (TextView) itemView.findViewById(R.id.nome);
+            fav_star = (ImageButton) itemView.findViewById(R.id.fav_button);
+
+            fav_star.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Contato contato = contactListFiltered.get(getAdapterPosition());
+                    ContatoDAO dao = new ContatoDAO(itemView.getContext());
+
+                    contato.setFavorito(!fav_star.isActivated());
+                    dao.favoritarContato(contato);
+                    contactListFiltered.set(contactListFiltered.indexOf(contato), contato);
+                    notifyItemChanged(contactListFiltered.indexOf(contato));
+                }
+            });
             itemView.setOnClickListener(this);
         }
 
