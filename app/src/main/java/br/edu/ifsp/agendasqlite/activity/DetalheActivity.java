@@ -38,6 +38,9 @@ public class DetalheActivity extends AppCompatActivity {
             EditText email = findViewById(R.id.editTextEmail);
             email.setText(c.getEmail());
 
+            EditText aniversario = findViewById(R.id.editTextAniversario);
+            aniversario.setText(c.getAniversario());
+
         }
 
 
@@ -67,11 +70,13 @@ public class DetalheActivity extends AppCompatActivity {
             String fone = ((EditText) findViewById(R.id.editTextFone)).getText().toString();
             String fone2 = ((EditText) findViewById(R.id.editTextFone2)).getText().toString();
             String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
+            String aniversario = ((EditText) findViewById(R.id.editTextAniversario)).getText().toString();
 
             c.setNome(nome);
             c.setFone(fone);
             c.setFone2(fone2);
             c.setEmail(email);
+            c.setAniversario(aniversario);
 
             dao.alterarContato(c);
             Log.d("ID: ", Integer.toString(c.getId()));
