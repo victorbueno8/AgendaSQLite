@@ -24,6 +24,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
                                                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                                                + KEY_NOME + " TEXT, "
                                                + KEY_FONE + " TEXT, "
+                                               + KEY_FONE_2 + " TEXT, "
                                                + KEY_EMAIL + " TEXT, "
                                                + KEY_FAV + " INTEGER DEFAULT 0, "
                                                + KEY_FONE_2 + " TEXT); ";
