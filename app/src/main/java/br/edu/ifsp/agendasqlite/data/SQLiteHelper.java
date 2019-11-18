@@ -14,17 +14,19 @@ class SQLiteHelper extends SQLiteOpenHelper {
     static final String KEY_ID = "id";
     static final String KEY_NOME = "nome";
     static final String KEY_FONE = "fone";
+    static final String KEY_FONE_2 = "fone2";
     static final String KEY_EMAIL = "email";
     static final String KEY_FAV = "favorito";
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                                                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                                                + KEY_NOME + " TEXT, "
                                                + KEY_FONE + " TEXT, "
                                                + KEY_EMAIL + " TEXT, "
-                                               + KEY_FAV + " INTEGER DEFAULT 0);" ;
+                                               + KEY_FAV + " INTEGER DEFAULT 0, "
+                                               + KEY_FONE_2 + " TEXT); ";
 
 
     public SQLiteHelper(@Nullable Context context) {
@@ -38,8 +40,13 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion) {
-            db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_FAV + " INTEGER DEFAULT 0;");
+        switch (oldVersion) {
+            case 1:
+                // atualiza da versao 1 para 2
+                db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_FAV + " INTEGER DEFAULT 0;");
+            case 2:
+                // atualiza da versao 2 para 3
+                db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_FONE_2 + " TEXT;");
         }
     }
 }
